@@ -2,9 +2,9 @@
 \usepackage{amsmath}
 \usepackage{theorem}
 \usepackage[all]{xy}
+\usepackage[a4paper, left=25mm,right=25mm,top=25mm,bottom=25mm]{geometry}
 \usepackage{fancybox}
 \usepackage{fancyhdr}
-\usepackage[left=25mm,right=25mm,top=25mm,bottom=25mm]{geometry}
 
 \theoremstyle{plain} %
 {\theorembodyfont{\normalfont}
@@ -228,9 +228,10 @@ define the plant model, the controller, and the tracking and
 disturbance signals. These models form the fundamental
 mathematical building blocks for the material which we will study
 in this lesson. Figure \ref{model-ls} illustrates the
-relationship between these mathematical models.
+relationship between these mathematical models.\\
 
 \begin{figure}[h]
+~\centering %
 \xymatrix{ & & \\%
     \fbox{\begin{Beqnarray*} % Tracking Signals
             \dot{z}_1 &=& A_1 z_1 \\ %
