@@ -1,8 +1,10 @@
-\documentclass[a4paper,10pt]{article} %10pt(default),11pt,12pt
-\usepackage[utf8]{inputenc}
+% PDFLaTeX
+\documentclass[a4paper,11pt]{article} %10pt(default),11pt,12pt
+\usepackage[T1]{fontenc} % clicking and copy-&-pasting URLs with underscores.
 \usepackage{mathastext}
 \usepackage{amsmath}
 \usepackage{theorem}
+\usepackage{siunitx}    % Scientific Units
 \usepackage[all]{xy}
 \usepackage[a4paper, left=25mm,right=25mm,top=25mm,bottom=25mm]{geometry}
 \usepackage{fancybox}
@@ -11,17 +13,15 @@
 \theoremstyle{plain} %
 {\theorembodyfont{\normalfont}
 \newtheorem{Exa}{Example}}
-%\newtheorem{Def}{Definition}
-%\newtheorem{The}{Theorem}
-%\newtheorem{Cor}{Corollary}
 
-\def\rver{v1.00}                % Release version
+\def\rver{v1.01}                % Release version
 \def\mp{minimum polynomial}
 \def\td{tracking/disturbance}
 \def\dt{disturbance/tracking}
 
-\renewcommand\familydefault{\sfdefault}
-\renewcommand{\baselinestretch}{1.05}
+\newcommand{\matr}[1]{\mathbf{#1}}
+\renewcommand{\rmdefault}{ptm}	% Times, IEEETrans
+%\renewcommand\familydefault{\sfdefault}
 
 \begin{document}
 \title{\Huge\bfseries Minimum Polynomial \& \mbox{Disturbance/Tracking Poles}\thanks{This material is based on reference \cite{algebra1} and \cite{masten1}}}
@@ -38,65 +38,50 @@
 %\tableofcontents
 
 \section{Minimum Polynomial of A Square Matrix}
-Let $A \! \neq \! 0$ be an $n$--square matrix over
-$\mathcal{F}\footnote{$\cal F$ : Field- See Appendix.}$. ~~Since
-$A \!\! \in \!\! \mathcal{M}_n(\mathcal{F})\footnote{$
-\mathcal{M}_n(\mathcal{F})$ : Total matrix algebra (the set of all
-n$\times$n matrices over $\cal F$) }$, the set $\{ I, A, A^2,
-\ldots , A^{n^2} \}$ is linearly dependent and there exist scalars
-$a_0,a_1,a_2,\ldots,a_{n^2}$ not all $0$ such that
+Let $\matr{A} \! \neq \! 0$ be an $n$--square matrix over $\mathcal{F}\footnote{$\cal F$ : Field- See Appendix.}$. ~~Since $\matr{A} \!\! \in \!\! \mathcal{M}_n(\mathcal{F})\footnote{$\mathcal{M}_n(\mathcal{F})$ : Total matrix algebra (the set of all n$\times$n matrices over $\cal F$) }$, the set $\{ \matr{I}, \matr{A}, \matr{A}^2, \ldots , \matr{A}^{n^2} \}$ is linearly dependent and there exist scalars $a_0,a_1,a_2,\ldots,a_{n^2}$ not all \num{0} such that
 \[
-    \phi (A) = a_0 I + a_1 A + a_2 A^2 + \cdots + a_{n^2} A^{n^2}
-    = 0
+    \phi (\matr{A}) = a_0 \matr{I} + a_1 \matr{A} + a_2 \matr{A}^2 + \cdots + a_{n^2} \matr{A}^{n^2}
+    = \matr{0}
 \]
-In this section we shall be concerned with that
-monic--polynomial\footnote{Monic Polynomial - See Appendix.}
-$m(\lambda) \in \mathcal{F}[\lambda]\footnote{${\cal F}[x]$ : Set
-of all polynomials in $x$ with coefficients in $\cal F$ }$ of
-minimum degree such that $m(A)=0$. Clearly, either $m(\lambda) =
-\phi(\lambda)$ or $m(\lambda)$ is a proper divisor of
-$\phi(\lambda)$. In either case, $m(\lambda)$ will be called the
-{\em minimum polynomial}~\cite[p.177]{algebra1} of $A$.
+In this section we shall be concerned with that monic--polynomial\footnote{Monic Polynomial - See Appendix.} 
+$m(\lambda) \in \mathcal{F}[\lambda]\footnote{${\cal F}[x]$ : Set of all polynomials in $x$ with coefficients in $\cal F$ }$ of minimum degree such that $m(\matr{A})=\matr{0}$. Clearly, either $m(\lambda) = \phi(\lambda)$ or $m(\lambda)$ is a proper divisor of $\phi(\lambda)$. In either case, $m(\lambda)$ will be called the
+{\em minimum polynomial}~\cite[p.177]{algebra1} of $\matr{A}$.
 
-The most elementary procedure for obtaining the minimum polynomial
-of $A \neq 0$ involves the following routine:
+The most elementary procedure for obtaining the minimum polynomial of $\matr{A} \neq 0$ involves the following routine:
 
 \begin{enumerate}
-  \item If $A = a_0 I$, $a_0 \in \mathcal{F}$, then $m(\lambda)=\lambda - a_0$.
-  \item If $A \neq aI$ for all $a\!\in\!\mathcal{F}$ but $A^2 =
-  a_1A+a_0I$ with $a_0,a_1\in\mathcal{F}$, then
+  \item If $\matr{A} = a_0 \matr{I}$, $a_0 \in \mathcal{F}$, then $m(\lambda)=\lambda - a_0$.
+  \item If $\matr{A} \neq a\matr{I}$ for all $a\!\in\!\mathcal{F}$ but $\matr{A}^2 = a_1\matr{A}+a_0\matr{I}$ ~with $a_0,a_1\in\mathcal{F}$, then
   $m(\lambda)={\lambda}^2-a_1\lambda-a_0$.
-  \item If $A^2 \neq aA+bI$ ~for all $a,b\!\in\!\mathcal{F}$ but $A^3 =
-  a_2A^2+a_1A+A_0I$ with $a_0,a_1,a_2\in\mathcal{F}$, then
-  $m(\lambda)={\lambda}^3-a_2{\lambda}^2-a_1\lambda-a_0$
+  \item If $\matr{A}^2 \neq a\matr{A}+b\matr{I}$ ~for all $a,b\!\in\!\mathcal{F}$ but $\matr{A}^3 = a_2\matr{A}^2+a_1\matr{A}+a_0\matr{I}$ with $a_0,a_1,a_2\in\mathcal{F}$, then $m(\lambda)={\lambda}^3-a_2{\lambda}^2-a_1\lambda-a_0$
 \end{enumerate}
 
 and so on.
 
 \begin{Exa}
-Find the \mp\ of $A = \left[ \begin{array}{cc} 1 & 0
+Find the \mp\ of $\matr{A} = \left[ \begin{array}{cc} 1 & 0
 \\ 0 & 1 \end{array} \right]$. \\%
 \vspace{0.5\baselineskip} %
-Since $A-I=0$, the answer is $m(\lambda)=\lambda -1$.
+Since $\matr{A}-\matr{I}=\matr{0}$, the answer is $m(\lambda)=\lambda -1$.
 \end{Exa}
 
 \begin{Exa}
-Find the \mp\ of $A = \left[ \begin{array}{cc} 0 & 1
+Find the \mp\ of $\matr{A} = \left[ \begin{array}{cc} 0 & 1
 \\ 0 & 0 \end{array} \right]$. \\%
 \vspace{0.5\baselineskip} %
-Since $A^2=0$, the answer is $m(\lambda)={\lambda}^2$.
+Since $\matr{A}^2=\matr{0}$, the answer is $m(\lambda)={\lambda}^2$.
 \end{Exa}
 
 \begin{Exa}\label{ex3}
-Find the minimum polynomial of $A = \left[
+Find the minimum polynomial of $\matr{A} = \left[
 \begin{array}{ccc} 1 & 2 & 2\\
 2 & 1 & 2 \\ 2 & 2 & 1 \end{array} \right]$ over $Q$. \\ %
 
-Since $A \neq a_0I$ for all $a_0 \in Q$, set%
+Since $\matr{A} \neq a_0\matr{I}$ for all $a_0 \in Q$, set%
 
 \vspace{0.5\baselineskip} %
 
-     $A^2 = \left[ \begin{array}{ccc}
+     $\matr{A}^2 = \left[ \begin{array}{ccc}
             9 & 8 & 8 \\
             8 & 9 & 8 \\
             8 & 8 & 9
@@ -119,50 +104,39 @@ Since $A \neq a_0I$ for all $a_0 \in Q$, set%
 
 \vspace{0.5\baselineskip}
 
-After checking every entry, we conclude that $A^2 = 4A + 5I$ and
-the minimum polynomial is ${\lambda}^2 -4\lambda - 5$.
+After checking every entry, we conclude that $\matr{A}^2 = 4\matr{A} + 5\matr{I}$ and the minimum polynomial is ${\lambda}^2 -4\lambda - 5$.
 
 \end{Exa}
 
-Foregoing example \ref{ex3} suggests that the constant term of the
-minimum polynomial of $A \neq 0$ is different from $0$ if and only
-if $A$ is non--singular. It can be used for computing the inverse
-of a non--singular matrix follows.
+Foregoing example \ref{ex3} suggests that the constant term of the minimum polynomial of $\matr{A} \neq \matr{0}$ is different from $0$ if and only if $\matr{A}$ is non--singular. It can be used for computing the inverse
+of a non--singular matrix as follows.
 
 \begin{Exa}
-For $A$ of example \ref{ex3}, find the inverse $A^{-1}$. \\ %
-Since $A^2-4A-5I = 0$ we have, after multiplying by $A^{-1}$,
-$A-4I-5A^{-1} = 0$; %
+For $\matr{A}$ of the example \ref{ex3}, find the inverse $\matr{A}^{-1}$. \\ %
+Since $\matr{A}^2-4\matr{A}-5\matr{I} = \matr{0}$ we have, after multiplying by $\matr{A}^{-1}$, ~$\matr{A}-4\matr{I}-5\matr{A}^{-1} = \matr{0}$; %
 
 \vspace{0.5\baselineskip}
 
-hence, $A^{-1}=\frac{1}{5} (A-4I) = \frac{1}{5} \left[
-\begin{array}{rrr} -3 & 2 & 2 \\ 2 & -3 & 2 \\ 2 &
-2 & -3
+hence, $\matr{A}^{-1}=\frac{1}{5} (\matr{A}-4\matr{I}) = \frac{1}{5} \left[
+\begin{array}{rrr} -3 & 2 & 2 \\ 2 & -3 & 2 \\ 2 & 2 & -3
 \end{array} \right]$.
 
 \end{Exa}
 
 \section{Plant Model}
-Consider multivariable linear time--invariant (LTI) plants, i.e.,
+Consider a multivariable linear time--invariant (LTI) plants, i.e.,
 it will be assumed that the following model can describe the plant to be controlled: %
 
 \begin{align}\label{pmodel}
-  \dot{x} &= Ax + Bu + E\omega \nonumber \\%
-  y &= Cx + Du + F\omega \\ %
-  y_m &= C_mx + D_mu + F_m\omega \nonumber \\%
+  \dot{x} &= \matr{A} x + \matr{B} u + \matr{E} \omega \nonumber \\%
+  y &= \matr{C} x + \matr{D} u + \matr{F} \omega \\ %
+  y_m &= \matr{C}_m x + \matr{D}_m u + \matr{F}_m \omega \nonumber \\%
   e &= y - y_{ref} \nonumber
 \end{align}
 
-where $u$ are the control inputs, $x$ is the state, $y$ are the
-outputs to be regulated, $y_m$ are the measurable outputs,
-$\omega$ are the disturbances, $y_{ref}$ are the tracking signals
-and $e$ are the errors in the system. It will be assumed that the
-plant has $m$ control inputs, $n$ states, $r$ outputs to be
-regulated, $r_m$ measurable outputs, $\Omega$ disturbances, $r$
-tracking signals and $r$ errors. Thus here the variables
-$u,x,y,y_m,\omega,y_{ref},e$ are actually column vectors with
-dimensions as follows:
+where $u$ are the control inputs, $x$ are the states, $y$ are the
+outputs to be regulated, $y_m$ are the measurable outputs, $\omega$ are the disturbances, $y_{ref}$ are the tracking signals and $e$ are the errors in the system. It will be assumed that the plant has $m$ control inputs, $n$ states, $r$ outputs to be regulated, $r_m$ measurable outputs, $\Omega$ disturbances, $r$
+tracking signals and $r$ errors. Thus here the variables $u, x, y, y_m, \omega, y_{ref}, e$ are actually column vectors with dimensions as follows:
 
 \begin{align}
 u &\in R^m \nonumber \\ %
@@ -175,30 +149,20 @@ e &\in R^r \nonumber
 \end{align}
 
 \section{Class of controllers}
-In general, in order to modify the behavior of the plant
-(\ref{pmodel}) to solve the servomechanism problem, it is
-necessary to apply a controller to it. A controller, in general,
-is a dynamic device which is applied to the plant, and has as its
-input $y_m$ and $y_{ref}$ and for its output $u$. Many different
-types of controllers are possible to apply; in this lesson, we
-shall only consider LTI controllers. The most general LTI
-controller is described by:
+In general, in order to modify the behavior of the plant (\ref{pmodel}) to solve the servomechanism problem, it is necessary to apply a controller to it. A controller, in general, is a dynamic device which is applied to the plant, and has as its input $y_m$ and $y_{ref}$ and for its output $u$. Many different
+types of controllers are possible to apply; in this lesson, we shall only consider LTI controllers. The most general LTI controller is described by:
 
 \begin{align}\label{class-ctr}
- \dot{\xi} &= {\Lambda}_{0}\xi + {\Lambda}_1 \, y_m + {\Lambda}_2
+ \dot{\xi} &= {\Lambda}_0 \,\xi + {\Lambda}_1 \, y_m + {\Lambda}_2
  \, y_{ref} \\
- u &= K_0 \xi + K_1 \, y_m + K_2 \, y_{ref} \nonumber
+ u &= \matr{K}_0 \,\xi + \matr{K}_1 \, y_m + \matr{K}_2 \, y_{ref} \nonumber
 \end{align}
 
-which has as inputs the tracking signal $y_{ref}$ and the
-measurable outputs $y_m$, and has as outputs the control signal
-$u$. Here $\xi$ is a state variable of the controller and
-$K_0,K_1,K_2,\Lambda_0,\Lambda_1,\Lambda_2$ are constant gain
-matrices associated with the controller.
+which has as inputs the tracking signal $y_{ref}$ and the measurable outputs $y_m$, and has as outputs the control signal $u$. Here $\xi$ is a state variable of the controller and $\matr{K}_0, \matr{K}_1, \matr{K}_2, \Lambda_0, \Lambda_1, \Lambda_2$ are constant gain matrices associated with the controller.
 
 \section{Class of Tracking/Disturbance Signals}
 In classical control, two classes of signals which are widely used
-to describe tracking signals $y_{ref}$ and disturbance signals
+to describe, tracking signals $y_{ref}$ and disturbance signals
 $\omega$ are the class of step and ramp type signals. Here a large
 class of signals will be considered, namely any signal which can
 arise from an unstable LTI system will be considered. In
@@ -206,55 +170,39 @@ particular, it will be assumed that the class of tracking signals
 and disturbance signals is specified, and arise from:
 
 \begin{alignat}{2}\label{class-tds}
-\dot{z}_1 &= A_1 z_1 \;,\; z_1 \in R^{\overline{n_1}} &\qquad %
-\dot{z}_2 &= A_2 z_2 \;,\; z_2 \in R^{\overline{n_2}} \nonumber \\%
-\sigma_1 &= C_1 z_1  &\qquad
-\omega &= C_2 z_2 \\%
-y_{ref} &= G \, \sigma_1 \nonumber %
+\dot{z}_1 &= \matr{A}_1 z_1 \;,\; z_1 \in R^{\overline{n_1}} &\qquad %
+\dot{z}_2 &= \matr{A}_2 z_2 \;,\; z_2 \in R^{\overline{n_2}} \nonumber \\%
+\sigma_1 &= \matr{C}_1 z_1  &\qquad \omega &= \matr{C}_2 z_2 \\%
+y_{ref} &= \matr{G} \, \sigma_1 \nonumber %
 \end{alignat}
 
-for some initial conditions $z_1(0), z_2(0)$, where for
-non--redundancy we assume that ($C_1, A_1$) and ($C_2, A_2$) are
-observable, and that rank $G$ = dim($\sigma_1$). For
-non--triviality, we assume that the signals $y_{ref}, \omega$ do
-not decay to zero, i.e., we assume that $Re(\lambda_{1}^i)\geq 0 \,
-, \,i=1,2,\ldots,\overline{n_1} \, , \; Re(\lambda_{2}^i)\geq 0 \,
-, \, i=1,2,\ldots,\overline{n_2} \;$ where $\{ \lambda_{1}^i,\,
-i=1,2,\ldots, \overline{n_1} \} \:,\: \{ \lambda_{2}^i,
-\,i=1,2,\ldots, \overline{n_2} \}$ denote the eigenvalues of $A_1,
-A_2$ respectively. This class of \td\ signals includes most classes
-of signals which occur in industrial systems, e.g. constant, ramp,
-polynomial, sinusoidal, polynomial--sinusoidal,
-exponential--polynomial signals.\\
+for some initial conditions $z_1(0), z_2(0)$, where for non--redundancy we assume that ($\matr{C}_1, \matr{A}_1$) and ($\matr{C}_2, \matr{A}_2$) are observable, and that rank $\matr{G}$ = dim($\sigma_1$). For non--triviality, we assume that the signals $y_{ref}, \omega$ do not decay to zero, i.e., we assume that $Re(\lambda_{1}^i)\geq 0 \, , \,i=1,2,\ldots,\overline{n_1} \, , \; Re(\lambda_{2}^i)\geq 0 \, , \, i=1,2,\ldots,\overline{n_2} \;$ where $\{ \lambda_{1}^i,\, i=1,2,\ldots, \overline{n_1} \} \:,\: \{ \lambda_{2}^i,
+\,i=1,2,\ldots, \overline{n_2} \}$ denote the eigenvalues of $\matr{A}_1, \matr{A}_2$ respectively. This class of \td\ signals includes most classes of signals which occur in industrial systems, e.g. constant, ramp, polynomial, sinusoidal, polynomial--sinusoidal, exponential--polynomial signals.\\
 
-The above equations (\ref{pmodel}),(\ref{class-ctr}), and
-(\ref{class-tds}) are very important for this lession since they
-define the plant model, the controller, and the tracking and
-disturbance signals. These models form the fundamental
-mathematical building blocks for the material which we will study
-in this lesson. Figure \ref{model-ls} illustrates the
-relationship between these mathematical models.\\
+The above equations (\ref{pmodel}),(\ref{class-ctr}), and (\ref{class-tds}) are very important for this lession since they define the plant model, the controller, and the tracking and disturbance signals. These models form the fundamental
+mathematical building blocks for the material which we will study in this lesson. Figure \ref{model-ls} illustrates the relationship between these mathematical models.\\
 
 \begin{figure}[h]
 ~\centering %
 \xymatrix{ & & \\%
     \fbox{\begin{Beqnarray*} % Tracking Signals
-            \dot{z}_1 &=& A_1 z_1 \\ %
-            \sigma_1 &=& C_1 z_1 \\ %
-            y_{ref} &=& G \, \sigma_1
+            \dot{z}_1 &=& \matr{A}_1 z_1 \\ %
+            \sigma_1 &=& \matr{C}_1 z_1 \\ %
+            y_{ref} &=& \matr{G} \, \sigma_1
          \end{Beqnarray*}
     } \ar@/^1pc/[dr]^-{y_{ref}} \ar@/_4pc/[ddr]^-{y_{ref}} \ar@{}[u]|><<<{\txt{Tracking Signals}} & &
     \ovalbox{\begin{Beqnarray*} % Disturbances to the Plant
-            \dot{z}_2 &=& A_2 z_2 \\ %
-            \omega &=& C_2 z_2 %
+            \dot{z}_2 &=& \matr{A}_2 z_2 \\ %
+            \omega &=& \matr{C}_2 z_2 %
          \end{Beqnarray*}
-    } \ar@/_2pc/[dl]^-{\omega} \ar@{}[u]|><<<{\txt{Disturbances to the Plant}} \\   %
+%   } \ar@/_2pc/[dl]^-{\omega} \ar@{}[u]|><<<{\txt{Disturbances to the Plant}} \\%
+    } \ar@/_1.5pc/[dl]^-{\omega} \ar@{}[u]|><<<{\txt{Disturbances to the Plant}} \\%
 %
   &
     \shadowbox{\begin{Beqnarray*} % Plant
-                \dot{x} &=& A \, x + B \, u + E \, \omega \\ %
-                y &=& C \, x + D \, u + F \, \omega \\ %
-                y_m &=& C_m \, x + D_m \, u + F_m \, \omega \\%
+                \dot{x} &=& \matr{A} \, x + \matr{B} \, u + \matr{E} \, \omega \\ %
+                y &=& \matr{C} \, x + \matr{D} \, u + \matr{F} \, \omega \\ %
+                y_m &=& \matr{C}_m \, x + \matr{D}_m \, u + \matr{F}_m \, \omega\\%
                 e &=& y_{ref} - y
                \end{Beqnarray*}
     }\ar[r] \ar@{}[u]|><<<{\txt{Plant}}
@@ -262,21 +210,18 @@ relationship between these mathematical models.\\
     \txt{Outputs\\$y , y_m$}  \\% Outputs
 %
   & \fbox{\begin{Beqnarray*} % Controller
-            \dot{\xi} &=& \Lambda_0 \, \xi + \Lambda_1 \, y_m + \Lambda_2 \, y_{ref} \\ %
-            u &=& K_0 \, y_m + K_1 \, \xi + K_2 \, y_{ref} %
-          \end{Beqnarray*}
+       \dot{\xi} &=& \Lambda_0 \, \xi + \Lambda_1 \, y_m + \Lambda_2 \, y_{ref} \\%
+       u &=& \matr{K}_0 \, y_m + \matr{K}_1 \, \xi + \matr{K}_2 \, y_{ref} %
+         \end{Beqnarray*}
     }\ar@{}[d]|><<<{\txt{Controller}} \ar[u]_-{u}
   & \\
   & &
 } %
-\caption{Mathematical model for linear system} %
+\caption{Mathematical model for the linear system} %
 \label{model-ls}
 \end{figure}
 
-
-Given (\ref{class-tds}), let $\{\lambda_1, \lambda_2, \ldots ,
-\lambda_q \}$ be the zeros of the least common multiple of the \mp\
-of $A_1$ and \mp\ of $A_2$ (multiplicities repeated), and call
+Given (\ref{class-tds}), let $\{\lambda_1, \lambda_2, \ldots , \lambda_q \}$ be the zeros of the least common multiple of the \mp\ of $\matr{A}_1$ and \mp\ of $\matr{A}_2$ (multiplicities repeated), and call
 
 \begin{equation}
   \Lambda := \{\lambda_1, \lambda_2, \ldots ,\lambda_q \}
@@ -289,49 +234,44 @@ the {\em \dt} poles\cite[pp.95--96]{masten1} of (\ref{class-tds}).\\%
 describe the class of disturbance/reference input signals being
 considered, e.g.
 
+\begin{quote}
 \begin{tabbing}
-~~~\=$\bullet$ the class of constant signals is denoted by
-~~~~~~~~~~~~~~~\=$\Lambda = \{0\}$ \\%
-  \>$\bullet$ the class of ramp signals is denoted by  \>$\Lambda =
-  \{0,0\}$ \\%
-  \>$\bullet$ the class of sinusoidal signals ($sin \, \omega t$) is
-  denoted by  \>$\Lambda = \{j\omega,-j\omega \}$ \\%
-  \>$\bullet$ the class of exponential signals ($e^{\lambda t}$) is
-  denoted by  \>$\Lambda = \{\lambda\}$ \\%
+\=$\bullet$ the class of constant signals is denoted by \qquad\qquad\ \=$\Lambda = \{0\}$ \\%
+\>$\bullet$ the class of ramp signals is denoted by  \>$\Lambda = \{0,0\}$ \\%
+\>$\bullet$ the class of sinusoidal signals ($sin \, \omega t$) is denoted by \>$\Lambda = \{j\omega,-j\omega \}$ \\%
+\>$\bullet$ the class of exponential signals ($e^{\lambda t}$) is denoted by  \>$\Lambda = \{\lambda\}$ \\%
 \end{tabbing}
+\end{quote}
 
-\begin{Exa} Find the \dt\ poles of the system (\ref{class-tds})
-given that
-
+\begin{Exa} Find the \dt\ poles of the system (\ref{class-tds}) given that
 \begin{alignat}{2}
-A_1 &= \left[ \begin{array}{cccc}
+\matr{A}_1 &= \left[ \begin{array}{cccc}
          1 & 0 & 0 & 0 \\
          0 & 1 & 0 & 0 \\
          0 & 0 & 0 & 1 \\
          0 & 0 & 0 & 0
       \end{array} \right]      &\qquad %
-A_2 &= \left[ \begin{array}{rr}
+\matr{A}_2 &= \left[ \begin{array}{rr}
          0 & \theta \\
          -\theta & 0
       \end{array} \right] \; , \; \theta \neq 0      \nonumber \\%
-C_1 &= \left[ \begin{array}{cccc}
+\matr{C}_1 &= \left[ \begin{array}{cccc}
          1 & 0 & 1 & 0 \\
          0 & 1 & 0 & 0
        \end{array} \right]   &\qquad
-C_2 &= \left[ \begin{array}{cc}
+\matr{C}_2 &= \left[ \begin{array}{cc}
                 1 & 0
        \end{array} \right]     \nonumber \\%
-G &= \left[ \begin{array}{cc}
+\matr{G} &= \left[ \begin{array}{cc}
           1 & 0 \\
           0 & 1
      \end{array} \right] \nonumber
 \end{alignat}
 
-First, find the \mp\ $m_1(\lambda)$, $m_2(\lambda)$ of each $A_1$,
-$A_2$ respectively.
+First, find the \mp\ $m_1(\lambda)$, $m_2(\lambda)$ of each $\matr{A}_1$, $\matr{A}_2$ respectively.
 \begin{alignat}{3}
-{A_1}^3 &= {A_1}^2 &\qquad  &\rightarrow &\qquad m_1(\lambda) &= {\lambda}^2 (\lambda - 1) \nonumber \\%
-{A_2}^2 &= -{\theta}^2 I &\qquad &\rightarrow  &\qquad
+{\matr{A}_1}^3 &= {\matr{A}_1}^2 &\qquad  &\rightarrow &\qquad m_1(\lambda) &= {\lambda}^2 (\lambda - 1) \nonumber \\%
+{\matr{A}_2}^2 &= -{\theta}^2 \matr{I} &\qquad &\rightarrow  &\qquad
 m_2(\lambda) &= {\lambda}^2+{\theta}^2 \nonumber
 \end{alignat}
 
@@ -395,16 +335,12 @@ A ring $\cal F$ whose non--zero elements form an abelian
 multiplicative group is called {\em field}. \cite[p.118]{algebra1}
 
 \section{Monic Polynomial}
-Let $\cal R$ be a ring with unity $u$. Any polynomial $\alpha(x)$
-of degree $m$ over $\cal R$ with leading coefficient $u$, the
-unity of $\cal R$, will be called {\em
-monic}.\cite[p.126]{algebra1}
+Let $\cal R$ be a ring with unity $u$. Any polynomial $\alpha(x)$ of degree $m$ over $\cal R$ with leading coefficient $u$, the unity of $\cal R$, will be called {\em monic}.\cite[p.126]{algebra1}
 \begin{Exa}
- The polynomials $1,\, x+3 ,\, \text{and~} x^2-5x+4$ ~are monic
- while $2x^2-x+5$ is not a monic polynomial over $I$.
+ The polynomials $1,\, x+3 ,\, \text{and~} x^2-5x+4$ ~are monic while $2x^2-x+5$ is not a monic polynomial over $\matr{I}$.
 \end{Exa}
 
-\vspace{4\baselineskip}
+\vspace{3\baselineskip}
 
 \bibliography{mylib}
 \bibliographystyle{ieeetr}
