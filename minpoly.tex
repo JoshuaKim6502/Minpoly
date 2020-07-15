@@ -9,19 +9,24 @@
 \usepackage[a4paper, left=25mm,right=25mm,top=25mm,bottom=25mm]{geometry}
 \usepackage{fancybox}
 \usepackage{fancyhdr}
+\fancypagestyle{plain}{}        % Affect all pages fancy
+\pagestyle{fancy} %
+\lhead{Minimum Polynomial \& Disturbance/Tracking Poles}  \rhead{Technical Note} %
+\cfoot{\thepage\ / \pageref{lastpage}}
+\rfoot{\small\rver}
+\setlength\headheight{14pt}     % Avoid warning IEEE
 
 \theoremstyle{plain} %
 {\theorembodyfont{\normalfont}
 \newtheorem{Exa}{Example}}
 
-\def\rver{v1.01}                % Release version
+\def\rver{v1.02}                % Release version
 \def\mp{minimum polynomial}
 \def\td{tracking/disturbance}
 \def\dt{disturbance/tracking}
 
 \newcommand{\matr}[1]{\mathbf{#1}}
 \renewcommand{\rmdefault}{ptm}	% Times, IEEETrans
-%\renewcommand\familydefault{\sfdefault}
 
 \begin{document}
 \title{\Huge\bfseries Minimum Polynomial \& \mbox{Disturbance/Tracking Poles}\thanks{This material is based on reference \cite{algebra1} and \cite{masten1}}}
@@ -29,11 +34,6 @@
 \date{Oct.10, 2019} %
 \maketitle %
 %\normalsize
-
-\thispagestyle{fancy} %
-\pagestyle{fancy} %
-\lhead{Minimum Polynomial \& Disturbance/Tracking Poles}  \rhead{Technical Note} %
-\rfoot{\small\rver}
 
 %\tableofcontents
 
@@ -43,7 +43,7 @@ Let $\matr{A} \! \neq \! 0$ be an $n$--square matrix over $\mathcal{F}\footnote{
     \phi (\matr{A}) = a_0 \matr{I} + a_1 \matr{A} + a_2 \matr{A}^2 + \cdots + a_{n^2} \matr{A}^{n^2}
     = \matr{0}
 \]
-In this section we shall be concerned with that monic--polynomial\footnote{Monic Polynomial - See Appendix.} 
+In this section we shall be concerned with that monic--polynomial\footnote{Monic Polynomial - See Appendix.}
 $m(\lambda) \in \mathcal{F}[\lambda]\footnote{${\cal F}[x]$ : Set of all polynomials in $x$ with coefficients in $\cal F$ }$ of minimum degree such that $m(\matr{A})=\matr{0}$. Clearly, either $m(\lambda) = \phi(\lambda)$ or $m(\lambda)$ is a proper divisor of $\phi(\lambda)$. In either case, $m(\lambda)$ will be called the
 {\em minimum polynomial}~\cite[p.177]{algebra1} of $\matr{A}$.
 
@@ -182,7 +182,7 @@ for some initial conditions $z_1(0), z_2(0)$, where for non--redundancy we assum
 The above equations (\ref{pmodel}),(\ref{class-ctr}), and (\ref{class-tds}) are very important for this lession since they define the plant model, the controller, and the tracking and disturbance signals. These models form the fundamental
 mathematical building blocks for the material which we will study in this lesson. Figure \ref{model-ls} illustrates the relationship between these mathematical models.\\
 
-\begin{figure}[h]
+\begin{figure}[ht]
 ~\centering %
 \xymatrix{ & & \\%
     \fbox{\begin{Beqnarray*} % Tracking Signals
@@ -344,5 +344,7 @@ Let $\cal R$ be a ring with unity $u$. Any polynomial $\alpha(x)$ of degree $m$ 
 
 \bibliography{mylib}
 \bibliographystyle{ieeetr}
+
+\label{lastpage}%
 
 \end{document}
